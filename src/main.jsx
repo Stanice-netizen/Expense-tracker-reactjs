@@ -5,7 +5,7 @@ import App from "./App";
 import { TransactionProvider } from "./context/TransactionContext";
 import { CategoryProvider } from "./context/CategoryContext";
 import { BudgetProvider } from "./context/BudgetContext";
-import "./index.css";
+import { ThemeProvider } from "./context/ThemeContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -13,7 +13,9 @@ createRoot(document.getElementById("root")).render(
       <TransactionProvider>
         <CategoryProvider>
           <BudgetProvider>
-            <App />
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
           </BudgetProvider>
         </CategoryProvider>
       </TransactionProvider>

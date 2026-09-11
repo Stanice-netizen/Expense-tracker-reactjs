@@ -1,6 +1,10 @@
 import TransactionItem from "./TransactionItem";
 
-function TransactionList({ transactions, onEdit }) {
+function TransactionList({
+  transactions,
+  onEdit,
+  hasTransactions,
+}) {
   const sortedTransactions = [...transactions].sort(
     (a, b) =>
       new Date(b.date) - new Date(a.date)
@@ -10,7 +14,12 @@ function TransactionList({ transactions, onEdit }) {
     return (
       <section>
         <h2>Transactions</h2>
-        <p>No transactions found.</p>
+
+        <p>
+          {hasTransactions
+            ? "No transactions match your filters."
+            : "No transactions yet."}
+        </p>
       </section>
     );
   }

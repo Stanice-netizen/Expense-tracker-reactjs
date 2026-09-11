@@ -3,7 +3,7 @@ import { useBudgetContext } from "../../context/BudgetContext";
 import { useCategoryContext } from "../../context/CategoryContext";
 
 function BudgetForm() {
-  const { addBudget } = useBudgetContext();
+  const { budgets, addBudget } = useBudgetContext();
   const { categories } = useCategoryContext();
 
   const [formData, setFormData] = useState({
@@ -68,10 +68,10 @@ function BudgetForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="budget-form" onSubmit={handleSubmit}>
       <h2>Set Monthly Budget</h2>
 
-      <div>
+      <div className="budget-form-group">
         <label htmlFor="budget-category">Category</label>
 
         <select
@@ -90,7 +90,7 @@ function BudgetForm() {
         </select>
       </div>
 
-      <div>
+      <div className="budget-form-group">
         <label htmlFor="budget-amount">Budget amount</label>
 
         <input
@@ -104,7 +104,7 @@ function BudgetForm() {
         />
       </div>
 
-      <div>
+      <div className="budget-form-group">
         <label htmlFor="budget-month">Month</label>
 
         <input
@@ -116,9 +116,11 @@ function BudgetForm() {
         />
       </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
 
-      <button type="submit">Set Budget</button>
+      <button type="submit" className="primary-button">
+        Set Budget
+      </button>
     </form>
   );
 }

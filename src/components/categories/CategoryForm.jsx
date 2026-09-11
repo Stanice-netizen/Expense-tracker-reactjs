@@ -29,8 +29,10 @@ function CategoryForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className="category-form" onSubmit={handleSubmit}>
+      <h2>Add Category</h2>
+
+      <div className="category-form-group">
         <label htmlFor="category-name">
           Category name
         </label>
@@ -44,22 +46,23 @@ function CategoryForm() {
         />
       </div>
 
-      <div>
+      <div className="category-form-group">
         <label htmlFor="category-color">
           Color
         </label>
 
         <input
           id="category-color"
+          className="category-color-input"
           type="color"
           value={color}
           onChange={(event) => setColor(event.target.value)}
         />
       </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
 
-      <button type="submit">
+      <button type="submit" className="primary-button">
         Add Category
       </button>
     </form>

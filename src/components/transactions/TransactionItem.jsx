@@ -1,16 +1,19 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { useTransactionContext } from "../../context/TransactionContext";
 import { useCategoryContext } from "../../context/CategoryContext";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 function TransactionItem({ transaction, onEdit }) {
   const { deleteTransaction } = useTransactionContext();
   const { categories } = useCategoryContext();
 
-  const category = categories.find((item) => item.id === transaction.category);
+  const category = categories.find(
+    (item) => item.id === transaction.category
+  );
 
   const handleDelete = () => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this transaction?",
+      "Are you sure you want to delete this transaction?"
     );
 
     if (confirmed) {
@@ -20,17 +23,24 @@ function TransactionItem({ transaction, onEdit }) {
 
   return (
     <div className="transaction-item">
-      <div>
+      <div className="transaction-info">
         <h3>{category?.name || "Unknown category"}</h3>
-        {transaction.note && <p>{transaction.note}</p>}
+
+        <p>{transaction.note || "No note"}</p>
 
         <small>{transaction.date}</small>
       </div>
 
-      <div>
-        <strong>
+      <div className="transaction-actions">
+        <strong
+          className={
+            transaction.type === "income"
+              ? "income-amount"
+              : "expense-amount"
+          }
+        >
           {transaction.type === "income" ? "+" : "-"}
-          {transaction.amount}
+          {formatCurrency(transaction.amount)}
         </strong>
 
         <button onClick={() => onEdit(transaction)}>

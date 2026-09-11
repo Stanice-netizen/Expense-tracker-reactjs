@@ -8,8 +8,7 @@ import useDebounce from "../hooks/useDebounce";
 function Transactions() {
   const { transactions } = useTransactionContext();
 
-  const [editingTransaction, setEditingTransaction] =
-    useState(null);
+  const [editingTransaction, setEditingTransaction] = useState(null);
 
   const [filters, setFilters] = useState({
     month: "",
@@ -18,17 +17,13 @@ function Transactions() {
     search: "",
   });
 
-  const debouncedSearch = useDebounce(
-  filters.search,
-  300
-);
+  const debouncedSearch = useDebounce(filters.search, 300);
 
   const filteredTransactions = useMemo(() => {
     return transactions.filter((transaction) => {
       // Month filter
       if (filters.month) {
-        const transactionMonth =
-          transaction.date.slice(0, 7);
+        const transactionMonth = transaction.date.slice(0, 7);
 
         if (transactionMonth !== filters.month) {
           return false;
@@ -36,10 +31,7 @@ function Transactions() {
       }
 
       // Type filter
-      if (
-        filters.type !== "all" &&
-        transaction.type !== filters.type
-      ) {
+      if (filters.type !== "all" && transaction.type !== filters.type) {
         return false;
       }
 
@@ -53,11 +45,9 @@ function Transactions() {
 
       // Search filter
       if (debouncedSearch) {
-  const searchTerm =
-    debouncedSearch.toLowerCase();
+        const searchTerm = debouncedSearch.toLowerCase();
 
-        const note =
-          transaction.note?.toLowerCase() || "";
+        const note = transaction.note?.toLowerCase() || "";
 
         if (!note.includes(searchTerm)) {
           return false;
@@ -66,36 +56,40 @@ function Transactions() {
 
       return true;
     });
-}, [
-  transactions,
-  filters.month,
-  filters.type,
-  filters.category,
-  debouncedSearch,
-]);
+  }, [
+    transactions,
+    filters.month,
+    filters.type,
+    filters.category,
+    debouncedSearch,
+  ]);
   return (
-    <div>
+    <main className="transactions-page">
       <h1>Transactions</h1>
 
-      <TransactionForm
-        transactionToEdit={editingTransaction}
-        onFinishEditing={() =>
-          setEditingTransaction(null)
-        }
-      />
+      <div className="transactions-layout">
+        <section className="transaction-form-card">
+          <TransactionForm
+            transactionToEdit={editingTransaction}
+            onFinishEditing={() => setEditingTransaction(null)}
+          />
+        </section>
 
-      <TransactionFilters
-        filters={filters}
-        setFilters={setFilters}
-      />
+        <section className="transactions-content">
+          <div className="filters-card">
+            <TransactionFilters filters={filters} setFilters={setFilters} />
+          </div>
 
-      <TransactionList
-        transactions={filteredTransactions}
-        onEdit={(transaction) =>
-          setEditingTransaction(transaction)
-        }
-      />
-    </div>
+          <div className="transaction-list-card">
+            <TransactionList
+              transactions={filteredTransactions}
+              hasTransactions={transactions.length > 0}
+              onEdit={(transaction) => setEditingTransaction(transaction)}
+            />
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
 

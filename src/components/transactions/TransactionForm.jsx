@@ -21,7 +21,6 @@ function TransactionForm({
 
   const [error, setError] = useState("");
 
-  // Fill the form when editing
   useEffect(() => {
     if (transactionToEdit) {
       setFormData({
@@ -94,14 +93,14 @@ function TransactionForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="transaction-form" onSubmit={handleSubmit}>
       <h2>
         {transactionToEdit
           ? "Edit Transaction"
           : "Add Transaction"}
       </h2>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="type">Type</label>
 
         <select
@@ -115,7 +114,7 @@ function TransactionForm({
         </select>
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="amount">Amount</label>
 
         <input
@@ -129,7 +128,7 @@ function TransactionForm({
         />
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="category">Category</label>
 
         <select
@@ -148,7 +147,7 @@ function TransactionForm({
         </select>
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="date">Date</label>
 
         <input
@@ -160,7 +159,7 @@ function TransactionForm({
         />
       </div>
 
-      <div>
+      <div className="form-group">
         <label htmlFor="note">Note</label>
 
         <input
@@ -173,22 +172,25 @@ function TransactionForm({
         />
       </div>
 
-      {error && <p>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
 
-      <button type="submit">
-        {transactionToEdit
-          ? "Save Changes"
-          : "Add Transaction"}
-      </button>
-
-      {transactionToEdit && (
-        <button
-          type="button"
-          onClick={onFinishEditing}
-        >
-          Cancel
+      <div className="form-buttons">
+        <button type="submit" className="primary-button">
+          {transactionToEdit
+            ? "Save Changes"
+            : "Add Transaction"}
         </button>
-      )}
+
+        {transactionToEdit && (
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={onFinishEditing}
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }

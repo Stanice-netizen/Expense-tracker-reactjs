@@ -3,13 +3,17 @@ import BudgetList from "../components/budgets/BudgetList";
 
 function Budgets() {
   return (
-    <div>
+    <main className="budgets-page">
       <h1>Budgets</h1>
 
-      <BudgetForm />
+      <section className="budget-form-card">
+        <BudgetForm />
+      </section>
 
-      <BudgetList />
-    </div>
+      <section className="budget-list-card">
+        <BudgetList />
+      </section>
+    </main>
   );
 }
 
